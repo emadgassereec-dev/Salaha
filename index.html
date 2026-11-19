@@ -1,1 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>صلحها</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-dark: #115e59;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+    }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #e2e8f0;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .mobile-shell {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background-color: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 40px 24px 34px;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      text-align: center;
+    }
+
+    .logo-box {
+      width: 84px;
+      height: 84px;
+      background: white;
+      border-radius: 24px;
+      margin: 0 auto 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease;
+    }
+
+    .logo-box:active {
+      transform: scale(0.94);
+    }
+
+    .app-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .app-subtitle {
+      font-size: 13.5px;
+      opacity: 0.92;
+    }
+
+    .main-content {
+      padding: 26px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-hint {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13.5px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .role-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 18px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: right;
+      width: 100%;
+    }
+
+    .role-card:hover, .role-card:active {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .role-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .icon-user { background: #ccfbf1; color: #0f766e; }
+    .icon-tech { background: #fef3c7; color: #d97706; }
+    .icon-partner { background: #e0e7ff; color: #4338ca; }
+
+    .role-info h3 {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .role-info p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .arrow {
+      margin-right: auto;
+      color: var(--muted);
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .footer {
+      padding: 14px 18px 22px;
+      background: white;
+      border-top: 1px solid var(--border);
+    }
+
+    .support-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 12px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 100;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: white;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 22px;
+      padding: 22px;
+      text-align: center;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-box h3 {
+      font-size: 18px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .pin-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 20px;
+      text-align: center;
+      letter-spacing: 8px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      outline: none;
+    }
+
+    .pin-input:focus {
+      border-color: var(--primary);
+    }
+
+    .error-msg {
+      color: #dc2626;
+      font-size: 12.5px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 11px;
+      border-radius: 12px;
+      border: none;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mobile-shell" id="homeScreen">
+    <header class="header">
+      <!-- اضغط 5 مرات متتالية على الشعار لفتح نافذة الرقم السري للمسؤول -->
+      <div class="logo-box" id="appLogo" title="صلحها">🛠️</div>
+      <h1 class="app-title">صلحها</h1>
+      <p class="app-subtitle">خدمات الصيانة وقطع الغيار بسهولة</p>
+    </header>
+
+    <main class="main-content">
+      <p class="section-hint">اختر طريقة التسجيل للمتابعة</p>
+
+      <button class="role-card" onclick="onSelectRole('التسجيل كمستخدم طالب خدمة')">
+        <div class="role-icon icon-user">🏠</div>
+        <div class="role-info">
+          <h3>التسجيل كمستخدم طالب خدمة</h3>
+          <p>طلب خدمات الصيانة بسهولة</p>
+        </div>
+        <span class="arrow">‹</span>
+      </button>
+
+      <button class="role-card" onclick="onSelectRole('التسجيل كفني')">
+        <div class="role-icon icon-tech">👷‍♂️</div>
+        <div class="role-info">
+          <h3>التسجيل كفني</h3>
+          <p>استقبال طلبات الصيانة حسب التخصص</p>
+        </div>
+        <span class="arrow">‹</span>
+      </button>
+
+      <button class="role-card" onclick="onSelectRole('التسجيل كشريك تجاري')">
+        <div class="role-icon icon-partner">🏪</div>
+        <div class="role-info">
+          <h3>التسجيل كشريك تجاري</h3>
+          <p>عرض وتوفير قطع الغيار والمستلزمات</p>
+        </div>
+        <span class="arrow">‹</span>
+      </button>
+    </main>
+
+    <footer class="footer">
+      <button class="support-btn" onclick="openSupport()">
+        <span>🎧</span>
+        <span>التواصل مع خدمة العملاء</span>
+      </button>
+    </footer>
+  </div>
+
+  <!-- نافذة دخول المسؤول بالرقم السري (تظهر بعد 5 ضغطات على الشعار) -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-box">
+      <h3>🔐 دخول المسؤول</h3>
+      <p>أدخل الرقم السري للوصول إلى لوحة التحكم</p>
+      <input type="password" id="adminPin" class="pin-input" maxlength="8" placeholder="••••" inputmode="numeric" />
+      <div class="error-msg" id="pinError">الرقم السري غير صحيح</div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="checkPin()">دخول</button>
+        <button class="btn btn-secondary" onclick="closeModal('adminModal')">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- نافذة خدمة العملاء -->
+  <div class="modal-overlay" id="supportModal">
+    <div class="modal-box">
+      <h3>🎧 خدمة العملاء</h3>
+      <p>تواصل مع فريق الدعم الفني لتطبيق صلحها</p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px;">
+        <button class="btn btn-primary" onclick="alert('سيتم ربط رقم الواتساب هنا')">واتساب خدمة العملاء</button>
+        <button class="btn btn-secondary" onclick="alert('سيتم ربط رقم الهاتف هنا')">اتصال مباشر</button>
+      </div>
+      <button class="btn btn-secondary" style="width: 100%;" onclick="closeModal('supportModal')">إغلاق</button>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_PIN = "1234";
+    let clicks = 0;
+    let timer = null;
+
+    document.getElementById("appLogo").addEventListener("click", () => {
+      clicks++;
+      clearTimeout(timer);
+
+      if (clicks >= 5) {
+        clicks = 0;
+        document.getElementById("adminPin").value = "";
+        document.getElementById("pinError").style.display = "none";
+        document.getElementById("adminModal").classList.add("active");
+        setTimeout(() => document.getElementById("adminPin").focus(), 100);
+      } else {
+        timer = setTimeout(() => { clicks = 0; }, 2000);
+      }
+    });
+
+    function checkPin() {
+      const val = document.getElementById("adminPin").value.trim();
+      if (val === ADMIN_PIN) {
+        closeModal("adminModal");
+        alert("تم التحقق من الرقم السري بنجاح! سنبني لوحة التحكم في الخطوة المخصصة لها.");
+      } else {
+        document.getElementById("pinError").style.display = "block";
+      }
+    }
+
+    function onSelectRole(roleName) {
+      alert("اخترت: " + roleName + " — سنبني شاشته في الخطوة التالية.");
+    }
+
+    function openSupport() {
+      document.getElementById("supportModal").classList.add("active");
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("active");
+    }
+  </script>
+</body>
+</html>
